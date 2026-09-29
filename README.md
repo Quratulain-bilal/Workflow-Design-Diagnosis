@@ -1,8 +1,7 @@
-# Poora Course: Workflow Design & Diagnosis, Start se End Tak
+ Workflow Design & Diagnosis, Start se End Tak
 
-Yeh ek hi flow hai. Har concept pichhle concept ke masle se paida hota hai, aur agla concept us ke adhoore hisse ko poora karta hai. Jahan koi gehri baat aati hai, wahan **🔎 Deep Concept** ka box hai. Part 1 (Concepts 1 se 4) maine pehle detail mein samjha diya tha, isliye yahan uska nichod hai aur asli tafseel Part 2 se shuru hoti hai.
 
-## Poori kahani ek nazar mein
+
 
 ```mermaid
 flowchart TD
