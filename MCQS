@@ -1,0 +1,464 @@
+
+
+# PART 1: Design the Work (Concepts 1 to 4)
+
+**Q1. [C1 | Hard]**
+A retail bank's compliance head states: *"All our analysts use AI daily, each with their own prompts, and the team lead reviews every output. Therefore our AML alert-triage workflow uses AI."* Which assessment best reflects Concept 1?
+
+- A. Correct: a team lead reviewing every output is a named human gate, which is what makes it a workflow.
+- B. Incorrect: what exists is a set of individual habits; no named steps with fixed owners run identically regardless of who is at the keyboard.
+- C. Correct: daily use across all analysts demonstrates that the practice is repeatable and therefore process-grade.
+- D. Incorrect: AML triage is a regulated activity and cannot legitimately include AI at any step.
+
+---
+
+**Q2. [C2 | Hard]**
+Four candidate requirements were submitted for a month-end reporting task. Which one satisfies the course's test that *you can write a check for it*?
+
+| # | Requirement as written |
+|---|---|
+| 1 | Delivered by 09:00 on working day 3 as a PDF, with figures accurate to a high degree. |
+| 2 | Delivered by 09:00 within three working days, as a PDF, reconciled to the ledger where practical. |
+| 3 | Delivered by 09:00 on working day 3 as a PDF; every figure equals the ledger closing balance within PKR 1. |
+| 4 | Delivered by 09:00 on working day 3 as a PDF, with figures reviewed by a senior analyst and considered reliable. |
+
+- A. Row 1
+- B. Row 2
+- C. Row 3
+- D. Row 4
+
+---
+
+**Q3. [C2 | Very Hard]**
+A product manager pastes *"we need better reporting"* and asks the model to turn it into a task definition. The model returns a polished definition: weekly, for the VP of Operations, drawn from the CRM, delivered as a dashboard. None of those four details was ever provided by the requester. What is the most serious defect?
+
+- A. Slots the requester never specified were closed at plausible defaults instead of being surfaced as clarifying questions the requester owes someone.
+- B. The output is a structure rather than a summary, so it does not tell the team what the source request actually said.
+- C. The definition should have been computed with code execution so that each field could be traced and re-run.
+- D. The definition omits a stated role for the model, which is the prompt component most likely to have been missing.
+
+---
+
+**Q4. [C3 | Hard | Log analysis]**
+
+```text
+14:02:11 INFO  Prompt: "Estimate Q3 headcount from the attached ticket data"
+14:02:19 INFO  Mode: inline text (no code execution)
+14:02:26 INFO  Output: "Volume grew 18.4% QoQ; avg 212 tickets/analyst; recommend 7 hires"
+14:05:40 INFO  Analyst re-ran in spreadsheet: growth 16.1%, avg 197 tickets/analyst
+14:05:41 WARN  Discrepancy 2.3 pp / 15 tickets. No error raised by the tool.
+```
+
+Which diagnosis and fix are most defensible?
+
+- A. Under-specification: add a role and audience to the prompt, since the figures differ from the first response.
+- B. Context overload: restart the conversation with a summary, since the figures degrade as the session grows.
+- C. Stale configuration: audit the ticket data source, since the numbers used to match the spreadsheet.
+- D. Wrong feature: a calculation was requested in prose; move it to code execution and then inspect which columns the code actually used.
+
+---
+
+**Q5. [C4 | Very Hard | Select ALL that apply]**
+Which of the following steps **fail** the window test as described?
+
+- A. Summarising twelve months of supplied ticket data into a trend statement.
+- B. Deciding whether to accept a fourth delay from a client, based on a relationship history discussed verbally with the partner last week.
+- C. Drafting three headcount options from supplied trend data.
+- D. Explaining the concept of utilisation rate to a new analyst.
+- E. Stating today's PKR/USD rate with no external source opened.
+
+---
+
+**Q6. [C4 | Hard]**
+An associate asks the assistant for the *current* statutory late-payment interest rate in a jurisdiction and receives a confident figure with no source. What does the course's research rule prescribe?
+
+- A. Ask for the figure together with a link to a source the associate can open, and verify it there.
+- B. Re-run the request on a higher-capability tier, since rate lookups fail because of shallow reasoning.
+- C. Ask the model to state its confidence level and accept the figure if it reports high confidence.
+- D. Accept it, because statutory rates are stable knowledge that the model's own training covers reliably.
+
+---
+
+# PART 2: The Delegation Map (Concepts 5 to 8)
+
+**Q7. [C5 | Hard | Table]**
+A team drafts this map row:
+
+| Step | Owner | Criterion that decided it | Carried by |
+|---|---|---|---|
+| Compute penalty exposure | AI | Must be computed, so code execution | Code execution |
+
+What is the defect?
+
+- A. Code execution cannot carry any step whose output feeds a human approval.
+- B. The owner should be Collaborative, since arithmetic errors are never reversible.
+- C. The Carried-by cell should read Skill, since penalty calculations follow a fixed procedure.
+- D. The Criterion cell contains an implementation reason; it must name reversibility, stakes or accountability instead.
+
+---
+
+**Q8. [C5 | Very Hard]**
+Step: *"Approve the weekly vendor payment batch."* The bank allows recall within 24 hours at negligible cost, and the batch is small. The finance controller signs the batch and is the person the auditor questions. What is the correct classification?
+
+- A. AI-appropriate: reversible and low cost, with an audit log kept.
+- B. Collaborative: AI approves and the controller glances at a summary.
+- C. Human-retained: the step is the call somebody answers for, and where criteria disagree the strictest one wins.
+- D. AI-appropriate, provided the model has been tested on prior batches.
+
+---
+
+**Q9. [C5 | Hard | Select ALL that apply]**
+Which of the following are **NOT** among the three criteria that decide ownership of a step?
+
+- A. Stakes
+- B. How well AI performed on this step in a test run
+- C. Whether the step is arithmetic
+- D. Accountability
+- E. Whether the work needs human creativity or empathy
+
+---
+
+**Q10. [C6 | Very Hard]**
+In the contract map, "Compute financial exposure" is AI-owned and is followed by "Approve or reject each change" (Human). To cut cycle time the team lets step 5 auto-accept any change whose computed exposure is below PKR 5 million. What happens to the classification of the exposure step?
+
+- A. It is unchanged: the arithmetic is identical, so it remains AI-appropriate.
+- B. It stops being AI-appropriate: its output no longer lands before a human who judges it, so the gate that made it safe has gone.
+- C. It becomes human-retained solely because code execution is no longer justified.
+- D. It becomes collaborative, because a numeric threshold counts as a named reviewer.
+
+---
+
+**Q11. [C6 | Hard]**
+A finance team flags expense claims that depart from the travel policy. In the current design, flagged and unflagged claims both flow to payout, and nobody reads the flags. How does the course classify this step?
+
+- A. AI-appropriate: flagging is mechanical and reversible whatever follows it.
+- B. Human-retained: interpreting policy is always a judgment.
+- C. AI-appropriate, provided a higher-capability tier performs the flagging.
+- D. Collaborative: with no downstream reader, the step needs a named person to judge the flags, or it is effectively automated.
+
+---
+
+**Q12. [C7 | Very Hard | Table]**
+Read this loan-processing map.
+
+| # | Step | Owner | Stated reason |
+|---|---|---|---|
+| 1 | Pull applicant documents | AI | Mechanical retrieval |
+| 2 | Extract income figures | AI | Our extraction Skill is excellent |
+| 3 | Assign a creditworthiness band | AI | Extraction has been 99% accurate for three months |
+| 4 | Draft the decision letter | Collaborative | An officer reviews before sending |
+| 5 | Send decline letters | AI | Only for "low-risk" declines, per the band from row 3 |
+| 6 | Log the outcome | AI | Mechanical write |
+
+Which pairing of rows and error types is correct?
+
+- A. Row 2: tool-shaped map. Row 3: halo delegation. Row 5: over-delegation authorised by Row 3's output.
+- B. Row 2: halo delegation. Row 3: tool-shaped map. Row 5: unstaffed gate.
+- C. Row 2: over-delegation. Row 3: halo delegation. Row 4: over-delegation.
+- D. Row 3: tool-shaped map. Row 4: unstaffed gate. Row 5: halo delegation.
+
+---
+
+**Q13. [C7 | Very Hard | Log analysis]**
+
+```text
+Week 31  Step 4 review  reviewers=2  drafts=112  avg review=3m10s  edits made=14
+Week 33  Reviewer B transferred to another team
+Week 34  Step 4 review  reviewers=1  drafts=118  avg review=1m05s  edits made=6
+Week 37  Step 4 review  reviewers=1  drafts=141  avg review=0m22s  edits made=1
+Map (last edited Q1): Step 4 = Collaborative, reviewer "duty agent"
+```
+
+Which conclusion is most defensible?
+
+- A. The gate is healthy: falling edit counts show that drafts have improved, which justifies faster review.
+- B. Context overload: draft quality has degraded, so the reviewer sees fewer defects to correct.
+- C. The gate is probably unstaffed: review time collapsed while volume rose and capacity halved, so treat the step as automated and correct the map.
+- D. Under-specification: the reviewer was never told which fields to check.
+
+---
+
+**Q14. [C8 | Hard]**
+A map lists *"Owner: Operations team"* and was last reviewed 14 months ago. Since then, case volume has tripled. Which statement is most accurate?
+
+- A. Acceptable: a team owner spreads accountability, and gates scale automatically with volume.
+- B. Defective: the owner must be one named person answerable for whether the map matches reality, and tripled volume is a trigger for early review because gates sized for old numbers fail at new ones.
+- C. Defective only because 14 months exceeds an annual cycle; ownership by a team is fine.
+- D. Acceptable: as long as the vendor reports model updates, a scheduled read is optional.
+
+---
+
+# PART 3: Build and Escalate (Concepts 9 and 10)
+
+**Q15. [C9 | Very Hard | Log analysis]**
+
+```text
+Cycle 1  Built 5 charts.                      Reviewer: "looks right"
+Cycle 2  Added date filter + totals row.      Reviewer: "filter works; totals look plausible"
+Cycle 3  Added brand colours + print layout.  Reviewer: "perfect, first attempt"
+Audit    Totals row differs from the sum of underlying rows by 3.7%. No error logged.
+```
+
+Which reading is most accurate?
+
+- A. Cycle 3 shows the loop works; cycle 2 was a wording issue fixable by describing the totals more precisely.
+- B. The failure is under-specification, because the reviewer never stated the expected totals.
+- C. Context overload: the totals degraded as the build session lengthened.
+- D. Cycle 2 was a feature problem (totals written rather than computed) that passed review silently; the fix is code execution plus inspecting what was computed, while cycle 3 was only a description problem.
+
+---
+
+**Q16. [C10 | Hard]**
+A dashboard built by prompting is opened weekly by three departments, and one department pastes its figures into a board report. Separately, the team has solved the same reporting problem the same way three times. Which pairing is correct?
+
+- A. Dependency by others is the escalation signal (developer or architect); repeating the same method is a separate signal pointing to building a worker; the questions are "who is exposed" and "has the method stopped changing".
+- B. Both signals mean the same thing: hand the tool to a developer.
+- C. Neither signal applies; keep prompt-and-iterate with a monthly check.
+- D. Dependency points to building a worker; repetition points to developer or architect.
+
+---
+
+# PART 4: Diagnose (Concepts 11 and 12)
+
+**Q17. [C11 | Very Hard | Log analysis]**
+
+```text
+09:00 INFO  Session start. Instruction: "Always output JSON with id, severity, summary."
+09:04 INFO  Turn 6:  valid JSON
+09:31 INFO  Turn 41: valid JSON
+10:12 INFO  Context loaded: 176,000 tokens (window: 200,000)
+10:14 WARN  Turn 78: output in prose, no severity field
+10:15 INFO  New session, same instruction, same input -> valid JSON
+```
+
+Which diagnosis fits best?
+
+- A. Stale configuration: the instruction is out of date because output diverged at turn 78.
+- B. Wrong tier: the task needs a more capable model after roughly turn 60.
+- C. Context overload: the fresh-session test already confirmed it; restart or summarise, and consider persisting the format.
+- D. Under-specification: the prompt never stated the JSON requirement forcefully enough.
+
+---
+
+**Q18. [C11 | Hard | Log analysis]**
+
+```text
+Mar       Weekly revenue report: PASS (reconciles to ledger)
+Jun       Weekly revenue report: PASS
+Sep 01    FAIL: figures follow the Q2 price list; September pricing absent
+Sep 01    Project knowledge: pricing_v3.pdf, last modified 2026-05-14
+Sep 01    Prompt unchanged since March. Session length: 4 turns. No errors.
+```
+
+What is the most probable cause and the cheapest first test?
+
+- A. Under-specification; re-read the prompt against its five parts.
+- B. Stale configuration; open the knowledge source and check its date, then replace the reference.
+- C. Expectation mismatch; the task asks for pricing the tool cannot know.
+- D. Context overload; restart the session and rerun the same report.
+
+---
+
+**Q19. [C12 | Hard | Ordering]**
+Steps: (a) question whether the task is a fit, (b) check the feature and model, (c) check that the configuration is current, (d) re-read the prompt against role, context, task, constraints and format, (e) check the length of the conversation. Which is the course's cheapest-first order?
+
+- A. e, d, b, c, a
+- B. d, b, e, c, a
+- C. d, e, c, b, a
+- D. d, e, b, c, a
+
+---
+
+**Q20. [C12 | Very Hard]**
+A director asks the assistant to predict *next Tuesday's exact* store footfall. The team spends an afternoon tuning prompts and trying a stronger tier. Which response is most consistent with the course?
+
+- A. Go directly to step 5 whenever a task asks for an exact future figure; the four cheaper checks are unnecessary.
+- B. Escalate to a higher tier, since forecast precision is a capability gap that tiers address.
+- C. Confirm the four cheaper causes are ruled out, then reshape the task into a range with stated assumptions or an adjustable driver model.
+- D. Rewrite the prompt in five-part structure until the exact number is produced reliably.
+
+---
+
+**Q21. [C11 | Very Hard | Select ALL that apply]**
+Which statements are consistent with the course?
+
+- A. Timing identifies the cause conclusively once you know when the symptom began.
+- B. One timing can have more than one cause; a poor first answer may stem from a thin prompt, bad source material, or run-to-run variation.
+- C. "It used to work" usually points to setup drift but can mean the task changed shape unnoticed.
+- D. A first-answer failure is best fixed by moving to a higher-capability tier.
+- E. Each cheap confirmation is worth running even when it returns negative, because it rules out the likeliest cause.
+
+---
+
+# PART 5: Make the Fix Stick (Concepts 13 to 16)
+
+**Q22. [C13 | Hard]**
+Which reaction-instruction-lever triple is correctly formed?
+
+- A. "Wrong tone" → add a tone constraint that applies to every draft → standing instruction.
+- B. "Too generic" → name the audience and the one action → knowledge base.
+- C. "It's using old data" → restate the correct figures in every prompt → prompt.
+- D. "Missed the point" → state the single question the output must answer, up front → standing instruction.
+
+---
+
+**Q23. [C14 | Very Hard | Table]**
+Classify each fix.
+
+| # | Fix |
+|---|---|
+| F1 | Every brief states the target segment in its first line. |
+| F2 | The current product list and price bands. |
+| F3 | Weekly report: pull ledger export → exclude cancelled orders → compute totals with code execution → apply template → attach reconciliation. |
+| F4 | Never quote a figure older than the current quarter. |
+
+- A. F1 Rule; F2 Rule; F3 Procedure; F4 Rule
+- B. F1 Rule; F2 Reference; F3 Rule; F4 Reference
+- C. F1 Procedure; F2 Reference; F3 Procedure; F4 Rule
+- D. F1 Rule; F2 Reference; F3 Procedure; F4 Rule
+
+---
+
+**Q24. [C14 | Hard]**
+An analyst types "exclude cancelled orders" into the chat every month. Colleague ran the report during his leave, and the numbers went out including cancelled orders. What is the best root-cause statement?
+
+- A. Memory should have been enabled; it would have carried the exclusion to the colleague.
+- B. The correction was never promoted; it lived in one person's monthly habit, and memory would not fix that because it is per-user and best-effort.
+- C. Under-specification: the colleague's prompt lacked a role, and adding one would have prevented the error.
+- D. Stale configuration: the exclusion expired between the analyst's monthly runs.
+
+---
+
+**Q25. [C16 | Hard | Log analysis]**
+
+```text
+Baseline:                        not recorded
+Post-change run (measured):      25 min, 1 revision round, 4 manual steps
+Analyst estimate of old process: "about 45 min"
+Manager:                         "Prove the saving in the budget review."
+```
+
+What is the most defensible next step?
+
+- A. Report "45 to 25 minutes" as measured, since the analyst's memory of the old process is credible.
+- B. Withdraw the improvement claim entirely, since no comparison is possible without a baseline.
+- C. Present 25 minutes as measured and 45 as an estimate, and obtain a measured comparison by running the old process alongside the new for a few cycles.
+- D. Ask another team to supply their old-process timing as a proxy baseline.
+
+---
+
+**Q26. [C16 | Very Hard]**
+A weekly liquidity compliance report to a regulator saves 20 minutes per run across 3 analysts over 52 weeks, and leadership celebrates the time saved. Which pair is correct: annual hours saved, and the metric this workflow should optimise for?
+
+- A. 52 hours; time
+- B. 17 hours; accuracy
+- C. 520 hours; consistency
+- D. 52 hours; accuracy
+
+---
+
+# PART 6: Operate and Explain (Concepts 17 and 18)
+
+**Q27. [C17 | Very Hard | Log analysis]**
+
+```text
+Fri 16:40  INFO   Weekly customer reports sent (n=212)
+Mon 09:10  ERROR  Client cites figures from a superseded price list
+Mon 09:12  INFO   price_list_v3 last modified 2026-05-14; v4 published 2026-08-01
+Mon 09:13  INFO   Reports have been sent weekly since 2026-08-01
+Mon 09:15  INFO   Workflow owner on leave; only the setup user can pause the Project
+```
+
+Which analysis is most accurate?
+
+- A. Only decision 3 (who is told) failed; stopping and scoping were adequate because the owner is on leave.
+- B. Decision 1 (stop) failed because only the setup user can pause it; decision 2 (scope) must treat every output since the price list went stale as affected, not just Friday's 212.
+- C. Decision 4 (map change) failed; the price list should have been embedded in a Skill.
+- D. Decision 2 failed because only the 212 reports from Friday are affected.
+
+---
+
+**Q28. [C18 | Hard]**
+Which description, addressed to a client's risk function, best follows the course?
+
+- A. "AI drafts the redline. A named lawyer approves every change before anything leaves the firm, and clauses outside the playbook are routed to that lawyer rather than decided by the tool."
+- B. "The review is fully automated, with lawyer oversight available on request for complex matters."
+- C. "AI handles first-pass review end to end; lawyers step in where the tool signals uncertainty."
+- D. "The tool performs at the level of a senior associate, so partner review is applied to a quarterly sample."
+
+---
+
+**Q29. [C18 | Hard | Select ALL that apply]**
+Which statements are consistent with Concept 18?
+
+- A. State what the tool does, then name the human checkpoint.
+- B. Naming what the workflow refuses to decide shows the boundary was designed in advance.
+- C. Explicit human checkpoints lower stakeholder trust because they imply the tool is weak.
+- D. The executive version should omit the gate so that the outcome stands out.
+- E. An accurate description is written after failure modes have been diagnosed, not before.
+
+---
+
+# INTEGRATION SCENARIOS (Concepts across parts)
+
+**Q30. [C4 to C7 | Very Hard | Steps and table]**
+
+| # | Invoice-to-payment step | Note |
+|---|---|---|
+| 1 | Extract vendor, amount and PO number from the invoice PDF | Checked at step 2 |
+| 2 | Match against the PO and flag mismatches | Flags are read at step 4 |
+| 3 | Compute variance and late-fee exposure | Result shown at step 4 |
+| 4 | Approve the invoice for payment | The decision the controller signs |
+| 5 | Release payment via bank portal | Same-day, not recallable |
+| 6 | Write the ledger entry | Mechanical |
+
+Which ownership assignment is correct?
+
+- A. 1 AI; 2 AI; 3 Human (arithmetic is high stakes); 4 Collaborative; 5 Human; 6 AI
+- B. 1 AI; 2 Collaborative; 3 AI; 4 Collaborative; 5 AI (low value only); 6 AI
+- C. 1 AI; 2 AI; 3 AI (code execution, feeding step 4); 4 Human; 5 Human (named signer); 6 AI
+- D. 1 Collaborative; 2 AI; 3 AI; 4 AI; 5 Human; 6 Human
+
+---
+
+**Q31. [C11, C14, C15 | Very Hard | Log analysis]**
+
+```text
+Ticket-summary run log (no shared configuration in place)
+Run 1  Priya   fresh chat, own prompt  -> OK
+Run 2  Imran   fresh chat, own prompt  -> severity line missing
+Run 3  Zainab  fresh chat, own prompt  -> severity present, different layout
+Run 4  Priya   fresh chat, own prompt  -> OK
+No errors. Sessions were 3 to 5 turns. Reviewer reconciles layouts weekly.
+```
+
+Which fix design is best?
+
+- A. One long standing instruction containing the steps, severity definitions and formatting rules.
+- B. Split by kind: the ordered steps as a Skill, severity definitions as Project knowledge, and "always state severity first" as a standing instruction.
+- C. Each analyst relies on personal memory features to learn a preferred layout.
+- D. Move all runs to a higher-capability tier to reduce layout variation.
+
+---
+
+**Q32. [C1, C5, C7 | Very Hard]**
+An AI has approved 400 low-risk NDAs over two months with zero detected errors. The head of legal proposes moving approval to the AI. Which response is most consistent with the course?
+
+- A. Zero errors in 400 cases establishes the step's safety, so approval can move to the AI.
+- B. The evidence is strong enough to move approval to the AI with a monthly audit.
+- C. Approval is reversible because an NDA can later be terminated, so the step is delegable.
+- D. The record is evidence about drafting quality; approval is the decision somebody answers for, and errors may surface only weeks later, so the evidence does not transfer.
+
+---
+
+**Q33. [Part 2 opening | Hard]**
+An operations manager wants to upload client medical claim files into the assistant. The delegation map has no data-gate line, and the manager says the three criteria will handle it. Which is correct?
+
+- A. Wrong: whether this data may enter the tool is an Eligibility gate decided before ownership and covered by the Governance course; the three criteria do not decide it.
+- B. Right: reversibility, stakes and accountability together cover data exposure.
+- C. Wrong, because data questions belong in the Carried-by column.
+- D. Right, provided the step is classified as collaborative.
+
+---
+
+**Submit karne ka tareeqa:** ek hi message mein jawab bhejein, jaise `1-B, 2-C, 3-A ... 33-A`. Jin sawalon mein aap ko pakka nahi pata, un ke saath `?` laga dein. Main un ka alag se analysis karunga kyunke woh aap ki asli weak jagah hain. Agar aap chahein to jawab ke saath sirf 3 se 4 sawalon ki **wajah** bhi likh dein, is se main dekh sakunga ke ghalti concept ki hai ya sirf option chunne ki.
